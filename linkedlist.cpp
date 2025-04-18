@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <fstream>
 using namespace std;
 
 struct Student {
@@ -9,9 +11,13 @@ struct Student {
     Student* next;
 };
 
+//declaration and initializartiojb  
 Student s;
+string filen = "StudentInfo.txt";
 
+void deleteStudent(const string* filen, Student* s);
 void addStudent(Student* s); 
+void viewStudents(const string* filen);
 
 int main() {
 
@@ -35,11 +41,11 @@ int main() {
             break;
 
         case 2:
-
+            deleteStudent(&filen, &s);
             break;
 
         case 3:
-
+            viewStudents(&filen);
             break; 
 
         case 4:
@@ -57,12 +63,70 @@ int main() {
         default:
             cout << "Invalid.";
     }
-    
+   
 
-    } while (choice != 7);
+} while (choice != 7); 
+} 
 
+void addStudent(Student* s) {
+    cout << "Add Student Information" << endl<< endl;
+
+    cout << "Name: "; 
+    cin.ignore (); 
+    getline(cin, s -> name); 
+
+    cout << "Student ID: ";
+    getline(cin, s -> id);
+
+    cout << "Grade Level: ";
+    cin >> s-> gradelevel;
+
+    fstream file;
+    file.open("StudentInfo.txt", ios:: app);
+
+    if(!file.is_open()) {
+        cout << "Error opening file." << endl;
+    } else {  
+        file << "Name: " << s -> name << endl;
+        file << "Student ID: " << s -> id << endl;
+        file << "Grade Level: " << s -> gradelevel << endl;
+        file << endl;
+        file.close();
+        cout << "file saved." << endl;
+    }  
+
+ 
+    }
+
+void viewStudents(const string* filen) {
+  fstream file;
+  file.open(filen -> c_str(), ios::in);
+
+    if (!file.is_open()) {
+        cout << "Error: unable to open file." << endl;
+    } else {
+        string line;
+        while (getline(file, line)) {
+            cout << line << endl;
+        } cout << endl;
+        
+    }
 }
 
-void addStudent(Student* &s) {
+void deleteStudent(const string* filen, Student* s) {
+    string TargetID;
+    cout << "Enter Student ID: " << endl;
+    cin.ignore();
+    getline(cin, TargetID);
 
+    fstream inputfile("StudentInfo.txt");
+    fstream tempfile("tempfile.txt");
+
+    cout << "This worked" << endl;
 }
+
+
+
+
+
+
